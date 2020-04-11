@@ -12,39 +12,35 @@ jobs:
     steps:
     # Checks-out the repository in the required path.
       
-    - name: Gets OrangeFox
-      uses: srt32/git-actions@v0.0.3
-      with:
-        args: git clone --depth 1 https://gitlab.com/OrangeFox/Manifest.git --branch fox_9.0
-        
-    - name: Get our repository (Checkout@ won't cut it)
-      uses: srt32/git-actions@v0.0.3
-      with:
-        args: git clone https://github.com/exadeci/ofox_device_realme_RMX1931.git --branch fox_9.0 device/realme/RMX1931
+    - name: Install repo
+      run: sudo apt-get install repo
       
-    - name: Update's OrangeFox from the remote.
-      uses: srt32/git-actions@v0.0.3
+    - name: Gets OrangeFox
+      run: repo init -u https://gitlab.com/OrangeFox/Manifest.git --branch fox_9.0
+        
+#     - name: Get our repository (Checkout@ won't cut it)
+#       uses: srt32/git-actions@v0.0.3
+#       with:
+#         args: git clone https://github.com/exadeci/ofox_device_realme_RMX1931.git --branch fox_9.0 device/realme/RMX1931
+
+    - uses: actions/checkout@v2
       with:
-        args: |
-          cd Manifest
-          git remote update
-          git rebase origin/fox_9.0
+        ref: fox_9.0
+        path: device/realme/RMX1931
+        
+    - name: Update's OrangeFox from the remote.
+      run: repo sync
     
     - name: Build target
       run: |
-        cd Manifest
         sudo apt-get install -y lunch
         lunch omni_RMX1931-eng
     
     - name: Build the recovery
-      run: |
-        cd Manifest
-        mka recoveryimage
+      run: mka recoveryimage
       env: 
         ALLOW_MISSING_DEPENDENCIES: true
 
     - name: Build the recovery
       if: success()
-      run: |
-        cd Manifest
-        fastboot boot out/target/product/RMX1931/recovery.img
+      run: fastboot boot out/target/product/RMX1931/recovery.img
