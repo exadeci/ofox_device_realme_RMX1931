@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [ fox_9.0 ]
+  pull_request:
+    branches: [ fox_9.0 ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    # Checks-out the repository in the required path.
+    - uses: actions/checkout@v2
+      with:
+        ref: fox_9.0
+        path: device/realme/RMX1931
+
+    - name: Gets OrangeFox
+      run: repo init -u https://gitlab.com/OrangeFox/Manifest.git -b fox_9.0
+
+    - name: Update's OrangeFox from the remote.
+      run: repo sync
+    
+    - name: Build target
+      run: lunch omni_RMX1931-eng
+    
+    - name: Build the recovery
+      run: mka recoveryimage
+      env: 
+        ALLOW_MISSING_DEPENDENCIES: true
+
+    - name: Build the recovery
+      if: success()
+      run: fastboot boot out/target/product/RMX1931/recovery.img
