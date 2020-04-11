@@ -16,7 +16,7 @@ jobs:
       run: sudo apt-get install repo
       
     - name: Gets OrangeFox
-      run: repo init -u https://gitlab.com/OrangeFox/Manifest.git -b fox_9.0
+      run: repo --no-clone-bundle init -u https://gitlab.com/OrangeFox/Manifest.git -b fox_9.0
         
 #     - name: Get our repository (Checkout@ won't cut it)
 #       uses: srt32/git-actions@v0.0.3
@@ -29,7 +29,7 @@ jobs:
         path: device/realme/RMX1931
         
     - name: Update's OrangeFox from the remote.
-      run: repo sync
+      run: repo sync --no-clone-bundle
     
     - name: Build target
       run: |
