@@ -19,7 +19,7 @@ jobs:
     - name: Gets OrangeFox
       uses: srt32/git-actions@v0.0.3
       with:
-        args: git clone --depth 1 https://gitlab.com/OrangeFox/Manifest.git --branch fox_9.0
+        args: git clone --depth 1 https://gitlab.com/OrangeFox/Manifest.git --branch fox_9.0 .
 
     - name: Update's OrangeFox from the remote.
       uses: srt32/git-actions@v0.0.3
