@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
     # Checks-out the repository in the required path.
     - uses: actions/checkout@v2
@@ -17,10 +17,16 @@ jobs:
         path: device/realme/RMX1931
 
     - name: Gets OrangeFox
-      run: repo init -u https://gitlab.com/OrangeFox/Manifest.git -b fox_9.0
+      uses: srt32/git-actions@v0.0.3
+      with:
+        args: git clone --depth 1 https://gitlab.com/OrangeFox/Manifest.git --branch fox_9.0
 
     - name: Update's OrangeFox from the remote.
-      run: repo sync
+      uses: srt32/git-actions@v0.0.3
+      with:
+        args: |
+          git remote update
+          git rebase origin/fox_9.0
     
     - name: Build target
       run: lunch omni_RMX1931-eng
