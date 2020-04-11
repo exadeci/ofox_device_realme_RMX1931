@@ -16,12 +16,7 @@ jobs:
       run: sudo apt-get install repo
       
     - name: Gets OrangeFox
-      run: repo --no-clone-bundle init -u https://gitlab.com/OrangeFox/Manifest.git -b fox_9.0
-        
-#     - name: Get our repository (Checkout@ won't cut it)
-#       uses: srt32/git-actions@v0.0.3
-#       with:
-#         args: git clone https://github.com/exadeci/ofox_device_realme_RMX1931.git --branch fox_9.0 device/realme/RMX1931
+      run: repo init -u https://gitlab.com/OrangeFox/Manifest.git -b fox_9.0
 
     - uses: actions/checkout@v2
       with:
