@@ -17,6 +17,11 @@ jobs:
       with:
         args: git clone --depth 1 https://gitlab.com/OrangeFox/Manifest.git --branch fox_9.0
     
+    - name: Build target
+      run: |
+        cd Manifest
+        ls
+        
     - uses: actions/checkout@v2
       with:
         ref: fox_9.0
