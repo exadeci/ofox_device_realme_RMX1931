@@ -16,16 +16,11 @@ jobs:
       uses: srt32/git-actions@v0.0.3
       with:
         args: git clone --depth 1 https://gitlab.com/OrangeFox/Manifest.git --branch fox_9.0
-    
-    - name: Build target
-      run: |
-        cd Manifest
-        ls
         
-    - uses: actions/checkout@v2
+    - name: Get our repository (Checkout@ won't cut it)
+      uses: srt32/git-actions@v0.0.3
       with:
-        ref: fox_9.0
-        path: Manifest/device/realme/RMX1931
+        args: git clone https://github.com/exadeci/ofox_device_realme_RMX1931.git --branch fox_9.0 device/realme/RMX1931
       
     - name: Update's OrangeFox from the remote.
       uses: srt32/git-actions@v0.0.3
