@@ -14,13 +14,16 @@ jobs:
     - uses: actions/checkout@v2
       with:
         ref: fox_9.0
-        path: device/realme/RMX1931
+        path: Manifest/device/realme/RMX1931
 
     - name: Gets OrangeFox
       uses: srt32/git-actions@v0.0.3
       with:
-        args: git clone --depth 1 https://gitlab.com/OrangeFox/Manifest.git --branch fox_9.0 .
-
+        args: git clone --depth 1 https://gitlab.com/OrangeFox/Manifest.git --branch fox_9.0
+        
+    - name: Moves the OrangeFox content to the main folder
+      run: mv Manifest/* .
+      
     - name: Update's OrangeFox from the remote.
       uses: srt32/git-actions@v0.0.3
       with:
