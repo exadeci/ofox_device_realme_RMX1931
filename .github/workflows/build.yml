@@ -11,34 +11,39 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     # Checks-out the repository in the required path.
-    - uses: actions/checkout@v2
-      with:
-        ref: fox_9.0
-        path: device/realme/RMX1931
-
+      
     - name: Gets OrangeFox
       uses: srt32/git-actions@v0.0.3
       with:
         args: git clone --depth 1 https://gitlab.com/OrangeFox/Manifest.git --branch fox_9.0
-        
-    - name: Moves the OrangeFox content to the main folder
-      run: mv Manifest/* .
+    
+    - uses: actions/checkout@v2
+      with:
+        ref: fox_9.0
+        path: Manifest/device/realme/RMX1931
       
     - name: Update's OrangeFox from the remote.
       uses: srt32/git-actions@v0.0.3
       with:
         args: |
+          cd Manifest
           git remote update
           git rebase origin/fox_9.0
     
     - name: Build target
-      run: lunch omni_RMX1931-eng
+      run: |
+        cd Manifest
+        lunch omni_RMX1931-eng
     
     - name: Build the recovery
-      run: mka recoveryimage
+      run: |
+        cd Manifest
+        mka recoveryimage
       env: 
         ALLOW_MISSING_DEPENDENCIES: true
 
     - name: Build the recovery
       if: success()
-      run: fastboot boot out/target/product/RMX1931/recovery.img
+      run: |
+        cd Manifest
+        fastboot boot out/target/product/RMX1931/recovery.img
