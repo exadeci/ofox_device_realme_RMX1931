@@ -13,7 +13,9 @@ jobs:
     # Checks-out the repository in the required path.
       
     - name: Install repo
-      run: sudo apt-get install repo
+      run: |
+        sudo apt-get install repo
+        chmod 777 /usr/bin/repo
       
     - name: Gets OrangeFox
       run: repo init -u https://gitlab.com/OrangeFox/Manifest.git -b fox_9.0
