@@ -33,6 +33,7 @@ jobs:
     - name: Build target
       run: |
         cd Manifest
+        sudo apt-get install -y lunch
         lunch omni_RMX1931-eng
     
     - name: Build the recovery
